@@ -1,0 +1,35 @@
+.temperature-text {
+	text-shadow: 2px 2px 0px #000000;
+	color: white;
+	margin: 1rem;
+	
+}
+@media (max-width: 576px) {
+	.temperature-text {
+		font-size: 2rem;
+	}
+}
+@media (min-width: 576px) {
+	.temperature-text {
+		font-size: 3rem;
+	}
+}
+@media (min-width: 768px) {
+	.temperature-text {
+		font-size: 4rem;
+	}
+}
+@media (min-width: 992px) {
+	.temperature-text {
+		font-size: 5rem;
+	}
+}
+@media (min-width: 1200px) {
+	.temperature-text {
+		font-size: 6rem;
+	}
+}
+.weather-image {
+	max-height: 10rem;
+	object-fit: cover;
+}

@@ -10,10 +10,6 @@ const weather_images = {
 
 const default_image = "https://epoznan.pl/storage/gallery/59826/q9tn23hm3h6jjh8dtwr6h7qhz7893zxz_wm.jpg?1573064817";
 
-HTMLElement.prototype.appendChilds = function(...childs) {
-	Array.from(childs).forEach( (child) => this.appendChild(child) );
-}
-
 class TabCard extends HTMLDivElement {
 	constructor( name, coords ) {
 		super();
@@ -35,13 +31,13 @@ class TabCard extends HTMLDivElement {
 		this.cardTemperature.classList.add( "temperature-text", "text-right" );
 		
 		this.loader = document.createElement( "div" );
-		this.loader.classList.add( "loader" ); //, "align-middle" );
+		this.loader.classList.add( "loader" );
 
 		this.imgOverlayDiv = document.createElement( "div" );
 		this.imgOverlayDiv.classList.add( "card-img-overlay" );
 
 		this.closeButton = new CloseButton();
-		this.closeButton.addEventListener( "click", () => this.close() )
+		this.closeButton.addEventListener( "click", () => this._close() )
 		this.imgOverlayDiv.appendChild( this.closeButton );
 
 		this.cardBody.appendChilds( this.cardTitle, this.cardDescription );
@@ -49,46 +45,46 @@ class TabCard extends HTMLDivElement {
 		this.appendChilds( this.imgOverlayDiv, this.imageTop, this.cardBody );
 
 		if( coords != undefined ) { 
-			const tabHeader = document.querySelector("#tab-" + name + "-header");
-			getWeatherByCoords(coords.latitude, coords.longitude)
-				.then( (data) => this.update(data, tabHeader) )
-				.catch( () => this.error() );
+			const tabHeader = document.querySelector(`#tab-${name}-header`);
+			WeatherService.getWeatherByCoords(coords.latitude, coords.longitude)
+				.then( (data) => this._update(data, tabHeader) )
+				.catch( () => this._error() );
 		}
-		else getWeatherByName(name)
-			.then( (data) => this.update(data) )
-			.catch( () => this.error() );
+		else WeatherService.getWeatherByName(name)
+			.then( (data) => this._update(data) )
+			.catch( () => this._error() );
 	}
 
-	close() {
+	_close() {
 		this.parentNode.removeChild(this);
 
-		const tabHeader = document.querySelector( "#tab-" + this.id + "-header" );
+		const tabHeader = document.querySelector( `#tab-${this.id}-header` );
 		tabHeader.parentNode.removeChild( tabHeader );
 		$( "#tab-new-header" ).tab( "show" );
 	}
 
-	error() {
+	_error() {
 		this.imgOverlayDiv.removeChild( this.loader );
 		this.cardDescription.appendChild( document.createTextNode("Error while loading town's weather") );
 	}
 	
-	update(weather, tabHeader) {
+	_update(weather, tabHeader) {
 		this.imgOverlayDiv.removeChild( this.loader );
 
 		if( tabHeader != undefined ) {
 			tabHeader.childNodes[0].textContent = weather.data.name;
-			tabHeader.id = "tab-" + weather.data.name + "-header";
-			tabHeader.href = "#"+ weather.data.name;
+			tabHeader.id = `tab-${weather.data.name}-header`;
+			tabHeader.href = `#${weather.data.name}`;
 			this.id = weather.data.name;
 		}
 
 		this.cardTitle.childNodes[0].textContent = weather.data.name;
-		this.cardTemperature.appendChild( document.createTextNode( Math.floor(weather.data.main.temp - 273.15) + " °C" ) );
+		this.cardTemperature.appendChild( document.createTextNode( `${Math.floor(weather.data.main.temp - 273.15)} °C` ) );
 
 		this.cardDescription.appendChilds( 
-			document.createTextNode( "Actual weather: " + weather.data.weather[0].description ), 
+			document.createTextNode( `Actual weather: ${weather.data.weather[0].description}` ), 
 			document.createElement( "br" ),
-			document.createTextNode( "Wind: " + weather.data.wind.speed + "km/h" ) );
+			document.createTextNode( `Wind: ${weather.data.wind.speed} km/h` ) );
 		
 		let key;
 		if( weather.data.weather[0].id >= 700 && weather.data.weather[0].id < 800 ) 
@@ -97,4 +93,3 @@ class TabCard extends HTMLDivElement {
 		this.imageTop.src = weather_images[key];
 	}
 }
-customElements.define( "tab-card", TabCard, { extends: "div" } );

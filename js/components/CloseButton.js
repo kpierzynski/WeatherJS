@@ -11,4 +11,3 @@ class CloseButton extends HTMLButtonElement {
 		this.appendChild( this.closeSpan );
 	}
 }
-customElements.define( "close-button", CloseButton, { extends: "button" } );

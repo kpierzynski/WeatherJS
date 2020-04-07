@@ -7,22 +7,11 @@
 
 		<!-- Bootstrap things -->
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="loader.css" rel="stylesheet">
+		<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="../css/loader.css" rel="stylesheet">
 		<!-- Bootstrap things end-->
-		<style>
-			.temperature-text {
-				text-shadow: 2px 2px 0px #000000;
-				font-size: 3em;
-				color: white;
-				margin: 1rem;
-			}
-			.weather-image {
-				max-height: 10rem;
-				object-fit: cover;
-			}
-		</style>
 
+		<link href="../css/card_style.css" rel="stylesheet">
 	</head>
 
 	<body>
@@ -45,7 +34,7 @@
 										<form id="new-town">
 											<div class="form-group">
 												<div class="input-group mb-3">
-													<input type="text" class="form-control" placeholder="Town name..." aria-label="Town name..." aria-describedby="basic-addon2">
+													<input type="text" class="form-control" placeholder="Town name..." aria-label="Town name..." aria-describedby="basic-addon2" required>
 													<div class="input-group-append">
 													<button class="btn btn-outline-secondary" type="submit">Add</button>
 													</div>
@@ -66,11 +55,14 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-		<script src="WeatherAPI.js"></script>
-		<script src="CloseButton.js"></script>
-		<script src="TabHeader.js"></script>
-		<script src="TabCard.js"></script>
-		<script src="Weather.js"></script>
+		<script src="../js/services/Secrets.js"></script>
+		<script src="../js/services/WeatherService.js"></script>
+		<script src="../js/services/LocalizationService.js"></script>
+		<script src="../js/components/CloseButton.js"></script>
+		<script src="../js/components/TabHeader.js"></script>
+		<script src="../js/components/TabCard.js"></script>
+		<script src="../js/tools.js"></script>
+		<script src="../js/Weather.js"></script>
 
 	</body>
 </html>

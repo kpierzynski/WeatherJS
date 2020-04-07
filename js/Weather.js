@@ -2,13 +2,6 @@ const tabs = document.querySelector("#tab-list");
 const tabsContent = document.querySelector("#tab-list-content");
 const createNew = document.querySelector("#new-town");
 
-function getGeoLocation() {
-	return new Promise( (resolve, reject) => {
-		if( "geolocation" in navigator )
-			navigator.geolocation.getCurrentPosition( (pos) => resolve(pos), (error) => reject(error) );
-	});
-}
-
 createNew.addEventListener("submit", (event) => {
 	event.preventDefault();
 
@@ -33,12 +26,12 @@ createNew.addEventListener("submit", (event) => {
 async function setup() {
 
 	try {
-		const position = await getGeoLocation();
+		const position = await LocalizationService.getGeoLocation();
 
 		tabs.appendChild( new TabHeader("GeoLocalization") );
 		tabsContent.appendChild( new TabCard("GeoLocalization", position.coords) );
 	} catch( error ) {
-		console.log("Unable to get geo position.");
+		throw new Error("Unable to get localization.");
 	}
 }
 

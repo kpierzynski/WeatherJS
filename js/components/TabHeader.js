@@ -1,5 +1,3 @@
-//<a id="one-header" class="list-group-item list-group-item-action active" data-toggle="list" href="#one">xd</a>
-
 class TabHeader extends HTMLAnchorElement {
 	constructor( headerName ) {
 		super();
@@ -13,4 +11,3 @@ class TabHeader extends HTMLAnchorElement {
 		this.appendChild(this.textTitle);
 	}
 }
-customElements.define( "tab-header", TabHeader, { extends: "a" } );
